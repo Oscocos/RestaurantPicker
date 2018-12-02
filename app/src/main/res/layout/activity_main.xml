@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="617dp"
+        android:scaleType="centerCrop"
+        android:src="@color/colorPrimary"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/WhereToEat"
+        android:layout_width="366dp"
+        android:layout_height="66dp"
+        android:text="Where to eat?"
+        android:textColor="@color/colorEsketit"
+        android:textSize="52sp"
+        android:textStyle="bold|italic"
+        app:fontFamily="@font/open_sans_bold_italic"
+        tools:fontFamily="@font/arimo"
+        tools:layout_editor_absoluteX="9dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <ImageButton
+        android:id="@+id/spinButton"
+        android:layout_width="320dp"
+        android:layout_height="308dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/circle_menu"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="127dp" />
+
+    <ImageButton
+        android:id="@+id/settingsButton"
+        :
+        android:layout_width="221dp"
+        android:layout_height="116dp"
+        android:background="@null"
+        android:saveEnabled="true"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/settings_menu"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="469dp" />
+
+</android.support.constraint.ConstraintLayout>
