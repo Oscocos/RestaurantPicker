@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
@@ -14,42 +16,57 @@
         android:scaleType="centerCrop"
         android:src="@color/colorPrimary"
         android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        android:contentDescription="Background" />
 
     <TextView
         android:id="@+id/WhereToEat"
         android:layout_width="366dp"
         android:layout_height="66dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="8dp"
         android:text="Where to eat?"
         android:textColor="@color/colorEsketit"
         android:textSize="52sp"
         android:textStyle="bold|italic"
         app:fontFamily="@font/open_sans_bold_italic"
-        tools:fontFamily="@font/arimo"
-        tools:layout_editor_absoluteX="9dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintBottom_toTopOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.06999999"
+        tools:fontFamily="@font/arimo" />
 
     <ImageButton
-        android:id="@+id/spinButton"
+        android:id="@+id/spin_button"
         android:layout_width="320dp"
         android:layout_height="308dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/circle_menu"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="127dp" />
+        android:contentDescription="Spin icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/circle_menu" />
+
 
     <ImageButton
         android:id="@+id/settingsButton"
-        :
         android:layout_width="221dp"
         android:layout_height="116dp"
+        android:layout_marginTop="13dp"
         android:background="@null"
         android:saveEnabled="true"
         android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spin_button"
         app:srcCompat="@drawable/settings_menu"
-        tools:layout_editor_absoluteX="82dp"
-        tools:layout_editor_absoluteY="469dp" />
+        android:contentDescription="Settings icon" />
 
 </android.support.constraint.ConstraintLayout>
