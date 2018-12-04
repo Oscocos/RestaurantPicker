@@ -20,6 +20,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         spinButton = (ImageButton) findViewById(R.id.spin_button);
+        spinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSpinResult();
+            }
+        });
 
 
         settingsButton = (ImageButton) findViewById(R.id.settingsButton);
@@ -30,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void openSpinResult() {
+        Intent intent  = new Intent(this, SpinResult.class);
+        startActivity(intent);
     }
 
     public void openSettingsMenu() {
