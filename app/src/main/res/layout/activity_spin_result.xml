@@ -33,7 +33,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EatAt"
-        tools:srcCompat="@drawable/IMG_0956" />
+        tools:srcCompat="@drawable/place_holder_image" />
 
     <TextView
         android:id="@+id/or"
