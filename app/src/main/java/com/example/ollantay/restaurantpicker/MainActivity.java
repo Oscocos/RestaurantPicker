@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             Snackbar.make(snackBarLayout, "Location available, picking restaurant...", Snackbar.LENGTH_SHORT).show();
             pick();
         } else {
-            requestLocationPermission();
+            //requestLocationPermission();
         }
     }
 
