@@ -17,14 +17,27 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+
+//temporary? might not use these
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+
+
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     private ImageButton spinButton;
     private ImageButton settingsButton;
-
-    // Locatin request code
+    // Location request code
     private static final int GRANTED_LOCATION_REQUEST = 1;
-
+    private FusedLocationProviderClient mFusedLocationClient;
 
 
     @Override
@@ -32,12 +45,15 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
         spinButton = (ImageButton) findViewById(R.id.spin_button);
         spinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(MainActivity.this,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    
                     //pickARestaurant();
                     openSpinResult();
                 } else {
