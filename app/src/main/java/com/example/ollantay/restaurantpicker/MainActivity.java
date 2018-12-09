@@ -57,13 +57,20 @@ public class MainActivity extends AppCompatActivity implements
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
         spinButton = (ImageButton) findViewById(R.id.spin_button);
         spinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(MainActivity.this,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    pickARestaurant();
+                    mGoogleApiClient.connect();
                     openSpinResult();
                 } else {
                     requestLocationPermission();
@@ -80,12 +87,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-            mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     }
 
 //    void getLocation() {
@@ -125,15 +126,15 @@ public class MainActivity extends AppCompatActivity implements
 //
 //    }
 
+//    protected void startLocationUpdates() {
+////        mLocationRequest = LocationRequest.create()
+////                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+////                .setInterval(UPDATE_INTERVAL)
+////                .setFastestInterval(FASTEST_INTERVAL);
+//
+//    }
+
     //Overridden functions for the GoogleAPI interface
-
-    protected void startLocationUpdates() {
-        mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(UPDATE_INTERVAL)
-                .setFastestInterval(FASTEST_INTERVAL);
-
-    }
 
     @Override
     public void onConnected(Bundle bundle) {
@@ -143,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements
             double latitude = mLocation.getLatitude();
             double longitude = mLocation.getLongitude();
         } else {
-            startLocationUpdates();
+            requestLocationPermission();
         }
     }
     @Override
