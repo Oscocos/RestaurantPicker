@@ -120,6 +120,22 @@ public class MainActivity extends AppCompatActivity implements
                 Toast.LENGTH_SHORT).show();
     }
 
+
+//    public void pickARestaurant() {
+//
+//    }
+
+    //Overridden functions for the GoogleAPI interface
+
+    protected void startLocationUpdates() {
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(UPDATE_INTERVAL)
+                .setFastestInterval(FASTEST_INTERVAL);
+
+    }
+
+    @Override
     public void onConnected(Bundle bundle) {
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -130,19 +146,6 @@ public class MainActivity extends AppCompatActivity implements
             startLocationUpdates();
         }
     }
-
-    protected void startLocationUpdates() {
-        mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(UPDATE_INTERVAL)
-                .setFastestInterval(FASTEST_INTERVAL);
-
-    }
-
-    public void pickARestaurant() {
-
-    }
-
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
