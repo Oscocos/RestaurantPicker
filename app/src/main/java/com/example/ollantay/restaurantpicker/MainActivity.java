@@ -31,13 +31,15 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 
 
-public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback, LocationListener {
 
     private ImageButton spinButton;
     private ImageButton settingsButton;
     // Location request code
     private static final int GRANTED_LOCATION_REQUEST = 1;
     private FusedLocationProviderClient mFusedLocationClient;
+    private Location mLocation;
+    private LocationManager locationManager;
 
 
     @Override
@@ -73,8 +75,41 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     }
 
-    public void pickARestaurant() {
+    void getLocation() {
+        try {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 5, this);
+        }
+        catch(SecurityException e) {
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        Toast.makeText(MainActivity.this, "Location needed for the app to work at all!",
+                Toast.LENGTH_SHORT).show();
+    }
+
+
+
+    public void pickARestaurant() {
+        getLocation();
     }
 
     public void pick() {
