@@ -17,8 +17,12 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 
 //temporary? might not use these
 import android.content.Context;
@@ -31,7 +35,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 
 
-public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback, LocationListener {
+public class MainActivity extends AppCompatActivity implements
+        ActivityCompat.OnRequestPermissionsResultCallback, LocationListener,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private ImageButton spinButton;
     private ImageButton settingsButton;
@@ -39,7 +45,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private static final int GRANTED_LOCATION_REQUEST = 1;
     private FusedLocationProviderClient mFusedLocationClient;
     private Location mLocation;
-    private LocationManager locationManager;
+    private LocationManager mLocationManager;
+    private LocationRequest mLocationRequest;
+    private GoogleApiClient mGoogleApiClient;
 
 
     @Override
@@ -55,8 +63,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(MainActivity.this,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    
-                    //pickARestaurant();
+                    pickARestaurant();
                     openSpinResult();
                 } else {
                     requestLocationPermission();
@@ -73,18 +80,25 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             }
         });
 
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+            mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     }
 
-    void getLocation() {
-        try {
-            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 5, this);
-        }
-        catch(SecurityException e) {
-            e.printStackTrace();
-        }
-    }
+//    void getLocation() {
+//        try {
+//            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 5, this);
+//        }
+//        catch(SecurityException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
+    //Overridden functions for LocationListener interface
     @Override
     public void onProviderEnabled(String provider) {
 
@@ -102,19 +116,47 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     @Override
     public void onProviderDisabled(String provider) {
-        Toast.makeText(MainActivity.this, "Location needed for the app to work at all!",
+        Toast.makeText(MainActivity.this, "Location has been disabled. Location needed for the app to work at all!",
                 Toast.LENGTH_SHORT).show();
     }
 
+    public void onConnected(Bundle bundle) {
+        if (ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            double latitude = mLocation.getLatitude();
+            double longitude = mLocation.getLongitude();
+        } else {
+            startLocationUpdates();
+        }
+    }
 
+    protected void startLocationUpdates() {
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(UPDATE_INTERVAL)
+                .setFastestInterval(FASTEST_INTERVAL);
+
+    }
 
     public void pickARestaurant() {
-        getLocation();
-    }
-
-    public void pick() {
 
     }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+
+    //    public void pick() {
+//
+//    }
 
     public void requestLocationPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
