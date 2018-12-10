@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
 
+    private double latitude;
+    private double longitude;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,9 +125,9 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-//    public void pickARestaurant() {
-//
-//    }
+    public void pickARestaurant() {
+
+    }
 
 //    protected void startLocationUpdates() {
 ////        mLocationRequest = LocationRequest.create()
@@ -141,8 +144,8 @@ public class MainActivity extends AppCompatActivity implements
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            double latitude = mLocation.getLatitude();
-            double longitude = mLocation.getLongitude();
+            this.latitude = mLocation.getLatitude();
+            this.longitude = mLocation.getLongitude();
         } else {
             requestLocationPermission();
         }
@@ -198,6 +201,10 @@ public class MainActivity extends AppCompatActivity implements
 
     public void openSpinResult() {
         Intent intent  = new Intent(this, SpinResult.class);
+        String longi = Double.toString(longitude);
+        String lat = Double.toString(latitude);
+        intent.putExtra("Longitude", longi);
+        intent.putExtra("Latitude", lat);
         startActivity(intent);
     }
 
