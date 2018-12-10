@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Restaurant Picker</string>
+    <string name="empty_message">No restaurants nearby.r</string>
 </resources>

@@ -65,7 +65,13 @@ public class SpinResult extends AppCompatActivity {
         int radius = 1000;
 
         ArrayList<Restaurant> possibleRestaurants = search(latit, longit, radius);
-        Restaurant pickedPlace = picker(possibleRestaurants);
+        Restaurant pickedPlace;
+        if (possibleRestaurants == null) {
+            restaurantName.setText(getResources().getString(R.string.empty_message));
+            pickedPlace = new Restaurant();
+        } else {
+            pickedPlace = picker(possibleRestaurants);
+        }
         restaurantName.setText(pickedPlace.toString());
         rating.setText(String.valueOf(pickedPlace.getRating()));
 
@@ -79,6 +85,9 @@ public class SpinResult extends AppCompatActivity {
     }
 
     public static Restaurant picker(ArrayList<Restaurant> input) {
+        if (input == null) {
+            return null;
+        }
         Random temp = new Random();
         int toPick = temp.nextInt(Math.abs(input.size())) + 1;
         return input.get(toPick);
@@ -115,10 +124,8 @@ public class SpinResult extends AppCompatActivity {
             }
         } catch (MalformedURLException e) {
             Log.e(LOG_TAG, "Error with Places API URL", e);
-            return toReturn;
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error connecting to Places API", e);
-            return toReturn;
         } finally {
             if (connectToAPI != null) {
                 connectToAPI.disconnect();
@@ -160,7 +167,11 @@ public class SpinResult extends AppCompatActivity {
         }
         @Override
         public String toString() {
-            return this.name;
+            if (name == null) {
+                return "Empty.";
+            } else {
+                return this.name;
+            }
         }
     }
     // Not used anymore, for now
