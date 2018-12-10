@@ -23,7 +23,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.location.places.Place;
 
 
 //temporary? might not use these
@@ -35,6 +35,17 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -51,8 +62,14 @@ public class MainActivity extends AppCompatActivity implements
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
 
-    public static double latitude;
-    public static double longitude;
+    private static String API_KEY = "AIzaSyBHRWFidpYwj0Lgc39nYYwed65kPV2usoA\n";
+    private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
+
+    private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
+    private static final String TYPE_DETAILS = "/details";
+    private static final String TYPE_SEARCH = "/nearbysearch";
+    private static final String OUT_JSON = "/json?";
+    private static final String LOG_TAG = "ListRest";
 
 
     @Override
@@ -63,9 +80,9 @@ public class MainActivity extends AppCompatActivity implements
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
                 .build();
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -75,19 +92,7 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(MainActivity.this,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    mFusedLocationClient.getLastLocation()
-                            .addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
-                                @Override
-                                public void onSuccess(Location location) {
-                                    if (location != null) {
-                                        longitude = location.getLongitude();
-                                        latitude = location.getLatitude();
-                                    }
-                                }
-                            });
-
-                    //mGoogleApiClient.connect();
-                    //onConnected();
+                    mGoogleApiClient.connect();
                     openSpinResult();
                 } else {
                     requestLocationPermission();
@@ -139,6 +144,10 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
+//    public void pickARestaurant() {
+//
+//    }
+
 //    protected void startLocationUpdates() {
 ////        mLocationRequest = LocationRequest.create()
 ////                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -153,9 +162,9 @@ public class MainActivity extends AppCompatActivity implements
     public void onConnected(Bundle bundle) {
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            //mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            //this.latitude = mLocation.getLatitude();
-            //this.longitude = mLocation.getLongitude();
+            mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            double latitude = mLocation.getLatitude();
+            double longitude = mLocation.getLongitude();
         } else {
             requestLocationPermission();
         }
@@ -209,12 +218,73 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    public static ArrayList<Place> search(double lat, double lng, int radius) {
+        ArrayList<Place> restaurantList = null;
+        HttpURLConnection conn = null;
+        StringBuilder jsonResults = new StringBuilder();
+        try {
+            StringBuilder sb = new StringBuilder(PLACES_API_BASE);
+            sb.append(TYPE_SEARCH);
+            sb.append(OUT_JSON);
+            sb.append("location=" + String.valueOf(lat) + "," + String.valueOf(lng));
+            sb.append("&radius=" + String.valueOf(radius));
+            sb.append("&type=restaurant");
+            sb.append("&key=" + API_KEY);
+            URL url = new URL(sb.toString());
+            conn = (HttpURLConnection) url.openConnection();
+            InputStreamReader in = new InputStreamReader(conn.getInputStream());
+
+            int read;
+            char[] buff = new char[1024];
+            while ((read = in.read(buff)) != -1) {
+                jsonResults.append(buff, 0, read);
+            }
+        } catch (MalformedURLException e) {
+            Log.e(LOG_TAG, "", e);
+            return restaurantList;
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "", e);
+            return restaurantList;
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+        }
+        try {
+            // Create a JSON object hierarchy from the results
+            JSONObject jsonObj = new JSONObject(jsonResults.toString());
+            JSONArray predsJsonArray = jsonObj.getJSONArray("results");
+
+            // Extract the descriptions from the results
+            restaurantList = new ArrayList<>(predsJsonArray.length());
+            for (int i = 0; i < predsJsonArray.length(); i++) {
+                Place place = new Place();
+                place.reference = predsJsonArray.getJSONObject(i).getString("reference");
+                place.name = predsJsonArray.getJSONObject(i).getString("name");
+                restaurantList.add(place);
+            }
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, "Error processing JSON results", e);
+        }
+
+        return restaurantList;
+    }
+
+    public static class Place {
+        private String reference;
+        private String name;
+
+        public Place(){
+            super();
+        }
+        @Override
+        public String toString(){
+            return this.name; //This is what returns the name of each restaurant for array list
+        }
+    }
+
     public void openSpinResult() {
         Intent intent  = new Intent(this, SpinResult.class);
-        /*String longi = Double.toString(longitude);
-        String lat = Double.toString(latitude);
-        intent.putExtra("Longitude", longi);
-        intent.putExtra("Latitude", lat);*/
         startActivity(intent);
     }
 
