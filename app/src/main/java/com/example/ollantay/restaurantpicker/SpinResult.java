@@ -19,13 +19,19 @@ public class SpinResult extends AppCompatActivity {
         tryAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goBackToMain();
+                openSpinResult();
             }
         });
     }
 
+    public void openSpinResult() {
+        Intent intent  = new Intent(this, SpinResult.class);
+        startActivity(intent);
+    }
+
+    /* Not used anymore, for now
     public void goBackToMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    }
+    }*/
 }
