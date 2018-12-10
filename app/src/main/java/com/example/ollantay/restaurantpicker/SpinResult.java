@@ -28,6 +28,7 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
+import android.os.StrictMode;
 
 public class SpinResult extends AppCompatActivity {
     private ImageButton tryAgainButton;
@@ -47,42 +48,46 @@ public class SpinResult extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spin_result);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         tryAgainButton = (ImageButton) findViewById(R.id.tryAgain);
 
         final TextView restaurantName = (TextView) findViewById(R.id.restaurantName);
+        final TextView rating = (TextView) findViewById(R.id.rating);
+        Intent passedIntent = getIntent();
+        String longitude = passedIntent.getStringExtra("Longitude");
+        String latitude = passedIntent.getStringExtra("Latitude");
+
+        Double longit = Double.parseDouble(longitude);
+        Double latit = Double.parseDouble(latitude);
+        // radius to search in meters
+        int radius = 1000;
+
+        ArrayList<Restaurant> possibleRestaurants = search(latit, longit, radius);
+        Restaurant pickedPlace = picker(possibleRestaurants);
+        restaurantName.setText(pickedPlace.toString());
+        rating.setText(String.valueOf(pickedPlace.getRating()));
 
         tryAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent passedIntent = getIntent();
-                String longitude = passedIntent.getStringExtra("Longitude");
-                String latitude = passedIntent.getStringExtra("Latitude");
-
-                Double longit = Double.parseDouble(longitude);
-                Double latit = Double.parseDouble(latitude);
-                // radius to search in meters
-                int radius = 3000;
-
-                ArrayList<Restaurant> possibleRestaurants = search(latit, longit, radius);
-                Restaurant pickedPlace = picker(possibleRestaurants);
-                restaurantName.setText(pickedPlace.toString());
-
-                openSpinResult();
+                //openSpinResult();
+                goBackToMain();
             }
         });
     }
 
     public static Restaurant picker(ArrayList<Restaurant> input) {
         Random temp = new Random();
-        int toPick = temp.nextInt(input.size()) + 1;
+        int toPick = temp.nextInt(Math.abs(input.size())) + 1;
         return input.get(toPick);
     }
 
-    public void openSpinResult() {
+    /*public void openSpinResult() {
         Intent intent  = new Intent(this, SpinResult.class);
         startActivity(intent);
-    }
+    }*/
 
     public static ArrayList<Restaurant> search(double latit, double longit, int radius) {
         ArrayList<Restaurant> toReturn = null;
@@ -130,8 +135,8 @@ public class SpinResult extends AppCompatActivity {
             for (int i = 0; i < restaurantArray.length(); i++) {
                 Restaurant current = new Restaurant();
                 current.reference = restaurantArray.getJSONObject(i).getString("reference");
-                current.name = restaurantArray.getJSONObject(i).get("name");
-                current.rating = restaurantArray.getJSONObject(i).get("rating");
+                current.name = restaurantArray.getJSONObject(i).getString("name");
+                current.rating = restaurantArray.getJSONObject(i).getDouble("rating");
                 toReturn.add(current);
             }
 
@@ -158,9 +163,9 @@ public class SpinResult extends AppCompatActivity {
             return this.name;
         }
     }
-    /* Not used anymore, for now
+    // Not used anymore, for now
     public void goBackToMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    }*/
+    }
 }

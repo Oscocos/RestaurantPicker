@@ -8,13 +8,13 @@
 
     <TextView
         android:id="@+id/EatAt"
-        android:layout_width="172dp"
-        android:layout_height="69dp"
+        android:layout_width="205dp"
+        android:layout_height="78dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:text="Eat At:"
         android:textColor="@color/colorEsketit"
-        android:textSize="52sp"
+        android:textSize="60sp"
         android:textStyle="bold|italic"
         app:fontFamily="@font/open_sans_bold"
         app:layout_constraintBottom_toTopOf="@+id/background"
@@ -24,38 +24,43 @@
         app:layout_constraintVertical_bias="0.06999999"
         tools:fontFamily="@font/arimo" />
 
-    <ImageView
-        android:id="@+id/RestaurantImage"
-        android:layout_width="384dp"
-        android:layout_height="256dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EatAt"
-        app:srcCompat="@drawable/place_holder_image" />
-
     <TextView
         android:id="@+id/or"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="117dp"
-        android:text="OR"
+        android:layout_marginBottom="116dp"
+        android:text="Rating:"
         android:textColor="@color/colorEsketit"
-        android:textSize="36sp"
+        android:textSize="30sp"
         app:fontFamily="@font/arimo_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/restaurantName" />
+        app:layout_constraintHorizontal_bias="0.253"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginRight="76dp"
+        android:layout_marginBottom="18dp"
+        android:text="Rating:"
+        android:textColor="@color/colorEsketit"
+        android:textSize="30sp"
+        app:fontFamily="@font/arimo_bold"
+        app:layout_constraintBottom_toTopOf="@+id/tryAgain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/or" />
 
     <TextView
         android:id="@+id/restaurantName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="13dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="26dp"
         android:text="Restaurant Name"
         android:textColor="@color/colorEsketit"
         android:textSize="30sp"
@@ -63,22 +68,31 @@
         app:layout_constraintBottom_toTopOf="@+id/or"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RestaurantImage" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <ImageButton
         android:id="@+id/tryAgain"
         android:layout_width="295dp"
         android:layout_height="81dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/or"
-        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/try_again_button" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="242dp"
+        android:layout_height="185dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="33dp"
+        app:layout_constraintBottom_toTopOf="@+id/restaurantName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EatAt"
+        app:srcCompat="@drawable/noodle" />
 
 </android.support.constraint.ConstraintLayout>
