@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.view.View;
 import android.widget.ImageButton;
@@ -22,6 +23,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 
 //temporary? might not use these
@@ -49,8 +51,8 @@ public class MainActivity extends AppCompatActivity implements
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
 
-    private double latitude;
-    private double longitude;
+    public static double latitude;
+    public static double longitude;
 
 
     @Override
@@ -61,9 +63,9 @@ public class MainActivity extends AppCompatActivity implements
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
                 .build();
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -73,7 +75,19 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(MainActivity.this,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    mGoogleApiClient.connect();
+                    mFusedLocationClient.getLastLocation()
+                            .addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
+                                @Override
+                                public void onSuccess(Location location) {
+                                    if (location != null) {
+                                        longitude = location.getLongitude();
+                                        latitude = location.getLatitude();
+                                    }
+                                }
+                            });
+
+                    //mGoogleApiClient.connect();
+                    //onConnected();
                     openSpinResult();
                 } else {
                     requestLocationPermission();
@@ -143,9 +157,9 @@ public class MainActivity extends AppCompatActivity implements
     public void onConnected(Bundle bundle) {
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            this.latitude = mLocation.getLatitude();
-            this.longitude = mLocation.getLongitude();
+            //mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            //this.latitude = mLocation.getLatitude();
+            //this.longitude = mLocation.getLongitude();
         } else {
             requestLocationPermission();
         }
