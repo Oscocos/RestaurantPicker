@@ -104,11 +104,16 @@ public class SpinResult extends AppCompatActivity {
         return input.get(toPick);
     }
 
-    /*public void openSpinResult() {
-        Intent intent  = new Intent(this, SpinResult.class);
-        startActivity(intent);
-    }*/
 
+    /**This search function is a slightly tweaked version from one given in a tutorial.
+     * Link to the tutorial:
+     * https://medium.com/@nickwright_15152/creating-an-android-application-to-show-a-list-of-local-restaurants-58a3fecdaa64
+     *
+     * @param latit latitude
+     * @param longit longitude
+     * @param radius radius (in meters)
+     * @return List of Restaurants.
+     */
     public static ArrayList<Restaurant> search(double latit, double longit, int radius) {
         ArrayList<Restaurant> toReturn = null;
 

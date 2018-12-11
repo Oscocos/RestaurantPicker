@@ -6,7 +6,7 @@ import android.widget.Switch;
 
 public class SettingsMenu extends AppCompatActivity {
 
-    public Switch delivery = (Switch) findViewById(R.id.deliverySwitch);
+    //public Switch delivery = (Switch) findViewById(R.id.deliverySwitch);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
