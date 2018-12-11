@@ -56,15 +56,25 @@ public class SpinResult extends AppCompatActivity {
         final TextView restaurantName = (TextView) findViewById(R.id.restaurantName);
         final TextView rating = (TextView) findViewById(R.id.rating);
         Intent passedIntent = getIntent();
-        String longitude = passedIntent.getStringExtra("Longitude");
-        String latitude = passedIntent.getStringExtra("Latitude");
+        //String longitude = passedIntent.getStringExtra("Longitude");
+        //String latitude = passedIntent.getStringExtra("Latitude");
 
-        Double longit = Double.parseDouble(longitude);
-        Double latit = Double.parseDouble(latitude);
+        Double longit = (Double) MainActivity.longitude;
+        Double latit = MainActivity.latitude;
+
+
         // radius to search in meters
-        int radius = 1000;
+        int radius = 10;
 
         ArrayList<Restaurant> possibleRestaurants = search(latit, longit, radius);
+
+
+        Log.d("myTag", String.valueOf(longit));
+        Log.d("myTag", String.valueOf(latit));
+        Log.d("myTag", String.valueOf(possibleRestaurants.size()));
+
+
+
         Restaurant pickedPlace;
         if (possibleRestaurants == null) {
             restaurantName.setText(getResources().getString(R.string.empty_message));
@@ -89,7 +99,8 @@ public class SpinResult extends AppCompatActivity {
             return null;
         }
         Random temp = new Random();
-        int toPick = temp.nextInt(input.size());
+        int toPick = temp.nextInt(Math.abs(input.size() - 2) + 1);
+        System.out.println(input);
         return input.get(toPick);
     }
 
