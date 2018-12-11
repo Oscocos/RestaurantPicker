@@ -55,26 +55,16 @@ public class SpinResult extends AppCompatActivity {
 
         final TextView restaurantName = (TextView) findViewById(R.id.restaurantName);
         final TextView rating = (TextView) findViewById(R.id.rating);
-        //Intent passedIntent = getIntent();
-        //String longitude = passedIntent.getStringExtra("Longitude");
-        //String latitude = passedIntent.getStringExtra("Latitude");
+        Intent passedIntent = getIntent();
+        String longitude = passedIntent.getStringExtra("Longitude");
+        String latitude = passedIntent.getStringExtra("Latitude");
 
-        Double longit = (Double) MainActivity.longitude;
-        Double latit = MainActivity.latitude;
-
-
+        Double longit = Double.parseDouble(longitude);
+        Double latit = Double.parseDouble(latitude);
         // radius to search in meters
-        int radius = 5000;
+        int radius = 1000;
 
         ArrayList<Restaurant> possibleRestaurants = search(latit, longit, radius);
-
-
-        Log.d("myTag", String.valueOf(longit));
-        Log.d("myTag", String.valueOf(latit));
-        Log.d("myTag", String.valueOf(possibleRestaurants.size()));
-
-
-
         Restaurant pickedPlace;
         if (possibleRestaurants == null) {
             restaurantName.setText(getResources().getString(R.string.empty_message));
@@ -99,21 +89,15 @@ public class SpinResult extends AppCompatActivity {
             return null;
         }
         Random temp = new Random();
-        int toPick = temp.nextInt(Math.abs(input.size() - 2) + 1);
-        System.out.println(input);
+        int toPick = temp.nextInt(input.size());
         return input.get(toPick);
     }
 
+    /*public void openSpinResult() {
+        Intent intent  = new Intent(this, SpinResult.class);
+        startActivity(intent);
+    }*/
 
-    /**This search function is a slightly tweaked version from one given in a tutorial.
-     * Link to the tutorial:
-     * https://medium.com/@nickwright_15152/creating-an-android-application-to-show-a-list-of-local-restaurants-58a3fecdaa64
-     *
-     * @param latit latitude
-     * @param longit longitude
-     * @param radius radius (in meters)
-     * @return List of Restaurants.
-     */
     public static ArrayList<Restaurant> search(double latit, double longit, int radius) {
         ArrayList<Restaurant> toReturn = null;
 
@@ -190,7 +174,7 @@ public class SpinResult extends AppCompatActivity {
             }
         }
     }
-
+    // Not used anymore, for now
     public void goBackToMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
