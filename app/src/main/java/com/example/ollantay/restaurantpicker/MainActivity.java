@@ -139,10 +139,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    public void pickARestaurant() {
-
-    }
-
 //    protected void startLocationUpdates() {
 ////        mLocationRequest = LocationRequest.create()
 ////                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -215,10 +211,10 @@ public class MainActivity extends AppCompatActivity implements
 
     public void openSpinResult() {
         Intent intent  = new Intent(this, SpinResult.class);
-        String longi = Double.toString(longitude);
+        /*String longi = Double.toString(longitude);
         String lat = Double.toString(latitude);
         intent.putExtra("Longitude", longi);
-        intent.putExtra("Latitude", lat);
+        intent.putExtra("Latitude", lat);*/
         startActivity(intent);
     }
 

@@ -27,6 +27,7 @@
         android:layout_height="66dp"
         android:layout_marginTop="28dp"
         android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal"
         android:text="Where to eat?"
         android:textColor="@color/colorEsketit"
         android:textSize="52sp"

@@ -55,7 +55,7 @@ public class SpinResult extends AppCompatActivity {
 
         final TextView restaurantName = (TextView) findViewById(R.id.restaurantName);
         final TextView rating = (TextView) findViewById(R.id.rating);
-        Intent passedIntent = getIntent();
+        //Intent passedIntent = getIntent();
         //String longitude = passedIntent.getStringExtra("Longitude");
         //String latitude = passedIntent.getStringExtra("Latitude");
 
@@ -64,7 +64,7 @@ public class SpinResult extends AppCompatActivity {
 
 
         // radius to search in meters
-        int radius = 3000;
+        int radius = 5000;
 
         ArrayList<Restaurant> possibleRestaurants = search(latit, longit, radius);
 
@@ -185,7 +185,7 @@ public class SpinResult extends AppCompatActivity {
             }
         }
     }
-    // Not used anymore, for now
+
     public void goBackToMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
