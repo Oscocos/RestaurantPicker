@@ -12,6 +12,7 @@
         android:layout_height="75dp"
         android:layout_marginTop="36dp"
         android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal"
         android:text="Settings"
         android:textColor="@color/colorEsketit"
         android:textSize="52sp"
@@ -30,7 +31,7 @@
         android:layout_width="232dp"
         android:layout_height="47dp"
         android:ems="10"
-        android:hint="Maximum distance (Miles)"
+        android:hint="Maximum distance (Meters)"
         android:inputType="number"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,7 +41,7 @@
         app:layout_constraintVertical_bias="0.44" />
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/deliverySwitch"
         android:layout_width="234dp"
         android:layout_height="48dp"
         android:layout_marginTop="40dp"
