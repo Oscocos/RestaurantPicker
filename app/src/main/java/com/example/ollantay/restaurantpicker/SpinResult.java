@@ -74,8 +74,9 @@ public class SpinResult extends AppCompatActivity {
         ArrayList<Restaurant> possibleRestaurants = search(latit, longit, radius);
 
 
-        Log.d("myTag", String.valueOf(longit));
-        Log.d("myTag", String.valueOf(latit));
+        Log.d("myTagLONG", String.valueOf(longit));
+        Log.d("myTagLAT", String.valueOf(latit));
+        Log.d("mytagradius", String.valueOf(SettingsMenu.radius));
         Log.d("myTag", String.valueOf(possibleRestaurants.size()));
 
 

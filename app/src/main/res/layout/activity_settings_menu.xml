@@ -29,6 +29,7 @@
         android:id="@+id/editText"
         android:layout_width="232dp"
         android:layout_height="47dp"
+        android:autoText="false"
         android:ems="10"
         android:hint="Maximum distance (Meters)"
         android:inputType="number"
