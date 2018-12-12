@@ -24,6 +24,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 
 //temporary? might not use these
@@ -71,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements
     private static final String OUT_JSON = "/json?";
     private static final String LOG_TAG = "ListRest";
 
+    public static double longitude;
+    public static double latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +83,9 @@ public class MainActivity extends AppCompatActivity implements
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
                 .build();
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -92,15 +95,27 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(MainActivity.this,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    mGoogleApiClient.connect();
+                    mFusedLocationClient.getLastLocation()
+                            .addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
+                                @Override
+                                public void onSuccess(Location location) {
+                                    if (location != null) {
+                                        longitude = location.getLongitude();
+                                        latitude = location.getLatitude();
+                                    } else  {
+                                        requestLocationPermission();
+                                    }
+                                }
+                            });
+
+                    //mGoogleApiClient.connect();
+                    //onConnected();
                     openSpinResult();
                 } else {
                     requestLocationPermission();
                 }
             }
         });
-
-
         settingsButton = (ImageButton) findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override

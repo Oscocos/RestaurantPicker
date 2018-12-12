@@ -67,6 +67,7 @@ public class SpinResult extends AppCompatActivity {
         int radius;
         if (SettingsMenu.radius == 0) {
             radius = 5000;
+            SettingsMenu.radius = 5000;
         } else {
             radius = SettingsMenu.radius;
         }

@@ -25,7 +25,12 @@ public class SettingsMenu extends AppCompatActivity {
         info = findViewById(R.id.info);
         minPrice = findViewById(R.id.spinner);
         maxPrice = findViewById(R.id.spinner2);
-        radius = Integer.parseInt(distance.getText().toString());
+        String s = (distance.getText().toString());
+        if (!s.equals("")) {
+            radius = Integer.parseInt(s);
+        } else {
+            radius = 0;
+        }
         keyword = info.getText().toString();
     }
 }
