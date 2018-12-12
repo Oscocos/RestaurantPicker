@@ -16,8 +16,7 @@ public class SettingsMenu extends AppCompatActivity {
     public static String keyword = "food";
     private EditText distance;
     private EditText info;
-    private Spinner minPrice;
-    private Spinner maxPrice;
+
 
     private Button save;
 
@@ -28,8 +27,7 @@ public class SettingsMenu extends AppCompatActivity {
 
         distance = findViewById(R.id.editText);
         info = findViewById(R.id.info);
-        minPrice = findViewById(R.id.spinner);
-        maxPrice = findViewById(R.id.spinner2);
+
 
         save = findViewById(R.id.save);
         save.setOnClickListener(new View.OnClickListener() {

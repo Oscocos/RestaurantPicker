@@ -13,13 +13,14 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="617dp"
+        android:adjustViewBounds="false"
+        android:contentDescription="Background"
         android:scaleType="centerCrop"
-        android:src="@color/colorPrimary"
+        android:src="@color/backgsfjslfslgsd"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="Background" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/WhereToEat"
