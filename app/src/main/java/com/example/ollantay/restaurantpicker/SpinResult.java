@@ -57,7 +57,6 @@ public class SpinResult extends AppCompatActivity {
 
         final TextView restaurantName = (TextView) findViewById(R.id.restaurantName);
         final TextView rating = (TextView) findViewById(R.id.rating);
-        //final TextView priceLevel = findViewById(R.id.priceLevel2);
 
 
         Double longit = MainActivity.longitude;
@@ -73,11 +72,11 @@ public class SpinResult extends AppCompatActivity {
 
         ArrayList<Restaurant> possibleRestaurants = search(latit, longit, radius);
 
+        /* Logs for checking outputs :
         Log.d("myTag long", String.valueOf(longit));
         Log.d("myTag lat", String.valueOf(latit));
         Log.d("myTag size ", String.valueOf(possibleRestaurants.size()));
-        Log.d("myTag radius ", String.valueOf(radius));
-//        Log.d("myTag", SettingsMenu.keyword);
+        Log.d("myTag radius ", String.valueOf(radius)); */
 
         Restaurant pickedPlace;
         if (possibleRestaurants == null || possibleRestaurants.size() <= 0) {
@@ -88,12 +87,10 @@ public class SpinResult extends AppCompatActivity {
         }
         restaurantName.setText(pickedPlace.toString());
         rating.setText(String.valueOf(pickedPlace.getRating()));
-        //priceLevel.setText(pickedPlace.getPriceLeve());
 
         tryAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //openSpinResult();
                 goBackToMain();
             }
         });
@@ -105,15 +102,20 @@ public class SpinResult extends AppCompatActivity {
         }
         Random temp = new Random();
         int toPick = temp.nextInt(Math.abs(input.size() - 2) + 1);
-//        System.out.println(input);
         return input.get(toPick);
     }
 
-    /*public void openSpinResult() {
-        Intent intent  = new Intent(this, SpinResult.class);
-        startActivity(intent);
-    }*/
 
+    /** This function is largely similar to one from a helpful tutorial we found.
+     * This search function originally took an array of a class named Places.
+     * We replaced that with our own class Restaurant which fit our objective properly.
+     * Link: https://medium.com/@nickwright_15152/creating-an-android-application-to-show-a-list-of-local-restaurants-58a3fecdaa64
+     *
+     * @param latit Latitude as a double
+     * @param longit Longitude as a double
+     * @param radius Radius of search in meters
+     * @return a list of Restaurants.
+     */
     public static ArrayList<Restaurant> search(double latit, double longit, int radius) {
         ArrayList<Restaurant> toReturn = null;
 
