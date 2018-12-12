@@ -61,26 +61,21 @@ public class SpinResult extends AppCompatActivity {
 
         Double longit = MainActivity.longitude;
         Double latit = MainActivity.latitude;
-
+        String keyword = SettingsMenu.keyword;
 
         // radius to search in meters
         int radius;
         if (SettingsMenu.radius == 0) {
             radius = 5000;
-            SettingsMenu.radius = 5000;
         } else {
             radius = SettingsMenu.radius;
         }
 
         ArrayList<Restaurant> possibleRestaurants = search(latit, longit, radius);
 
-
-        Log.d("myTagLONG", String.valueOf(longit));
-        Log.d("myTagLAT", String.valueOf(latit));
-        Log.d("mytagradius", String.valueOf(SettingsMenu.radius));
+        Log.d("myTag", String.valueOf(longit));
+        Log.d("myTag", String.valueOf(latit));
         Log.d("myTag", String.valueOf(possibleRestaurants.size()));
-
-
 
         Restaurant pickedPlace;
         if (possibleRestaurants == null) {
@@ -128,6 +123,7 @@ public class SpinResult extends AppCompatActivity {
             apiCall.append("location=" + String.valueOf(latit) + "," + String.valueOf(longit));
             apiCall.append("&radius=" + String.valueOf(radius));
             apiCall.append("&type=restaurant");
+//            apiCall.append("@keyword=")
             apiCall.append("&key=" + API_KEY);
 
             URL urlToCall = new URL(apiCall.toString());

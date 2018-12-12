@@ -107,9 +107,6 @@ public class MainActivity extends AppCompatActivity implements
                                     }
                                 }
                             });
-
-                    //mGoogleApiClient.connect();
-                    //onConnected();
                     openSpinResult();
                 } else {
                     requestLocationPermission();

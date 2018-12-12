@@ -10,7 +10,7 @@ import android.widget.TextView;
 public class SettingsMenu extends AppCompatActivity {
 
     public static int radius;
-    public static String keyword;
+    public  static String keyword;
     private EditText distance;
     private EditText info;
     private Spinner minPrice;
@@ -25,12 +25,13 @@ public class SettingsMenu extends AppCompatActivity {
         info = findViewById(R.id.info);
         minPrice = findViewById(R.id.spinner);
         maxPrice = findViewById(R.id.spinner2);
-        String s = (distance.getText().toString());
-        if (!s.equals("")) {
-            radius = Integer.parseInt(s);
-        } else {
-            radius = 0;
+        String i = (distance.getText().toString());
+        if (!i.equals("")) {
+            radius = Integer.parseInt(i);
         }
-        keyword = info.getText().toString();
+        String j = info.getText().toString();
+        if (!j.equals("")) {
+            keyword = j;
+        }
     }
 }
