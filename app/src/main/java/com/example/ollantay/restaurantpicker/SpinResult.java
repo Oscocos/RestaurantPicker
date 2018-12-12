@@ -28,6 +28,8 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Set;
+
 import android.os.StrictMode;
 
 public class SpinResult extends AppCompatActivity {
@@ -55,16 +57,19 @@ public class SpinResult extends AppCompatActivity {
 
         final TextView restaurantName = (TextView) findViewById(R.id.restaurantName);
         final TextView rating = (TextView) findViewById(R.id.rating);
-        //Intent passedIntent = getIntent();
-        //String longitude = passedIntent.getStringExtra("Longitude");
-        //String latitude = passedIntent.getStringExtra("Latitude");
+
 
         Double longit = MainActivity.longitude;
         Double latit = MainActivity.latitude;
 
 
         // radius to search in meters
-        int radius = SettingsMenu.radius;
+        int radius;
+        if (SettingsMenu.radius == 0) {
+            radius = 5000;
+        } else {
+            radius = SettingsMenu.radius;
+        }
 
         ArrayList<Restaurant> possibleRestaurants = search(latit, longit, radius);
 
@@ -100,7 +105,7 @@ public class SpinResult extends AppCompatActivity {
         }
         Random temp = new Random();
         int toPick = temp.nextInt(Math.abs(input.size() - 2) + 1);
-        System.out.println(input);
+//        System.out.println(input);
         return input.get(toPick);
     }
 
