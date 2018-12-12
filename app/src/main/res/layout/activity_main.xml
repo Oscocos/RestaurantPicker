@@ -16,7 +16,7 @@
         android:adjustViewBounds="false"
         android:contentDescription="Background"
         android:scaleType="centerCrop"
-        android:src="@color/backgsfjslfslgsd"
+        android:src="@color/colorBackgroundColor"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
