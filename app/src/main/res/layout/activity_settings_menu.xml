@@ -12,7 +12,6 @@
         android:layout_height="75dp"
         android:layout_marginTop="36dp"
         android:layout_marginBottom="8dp"
-        android:gravity="center_horizontal"
         android:text="Settings"
         android:textColor="@color/colorEsketit"
         android:textSize="52sp"
@@ -40,91 +39,45 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.44" />
 
-    <Switch
-        android:id="@+id/deliverySwitch"
+    <EditText
+        android:id="@+id/info"
         android:layout_width="234dp"
         android:layout_height="48dp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="30dp"
-        android:autoText="false"
-        android:text="Delivery"
-        android:textSize="25sp"
+        android:hint="Keyword"
+        android:inputType="text"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eatAt" />
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="89dp"
-        android:layout_height="189dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginBottom="105dp"
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:layout_marginLeft="76dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginBottom="185dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/spinner2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginEnd="73dp"
+        android:layout_marginRight="73dp"
+        android:layout_marginBottom="185dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
-        app:layout_constraintVertical_bias="0.02">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <CheckBox
-                android:id="@+id/thaiCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thai"
-                tools:layout_editor_absoluteX="263dp"
-                tools:layout_editor_absoluteY="404dp" />
-
-            <CheckBox
-                android:id="@+id/greekCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Greek"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="404dp" />
-
-            <CheckBox
-                android:id="@+id/barCheck"
-                android:layout_width="61dp"
-                android:layout_height="31dp"
-                android:text="Bar"
-                tools:layout_editor_absoluteX="45dp"
-                tools:layout_editor_absoluteY="404dp" />
-
-            <CheckBox
-                android:id="@+id/mexicanCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mexican"
-                tools:layout_editor_absoluteX="263dp"
-                tools:layout_editor_absoluteY="349dp" />
-
-            <CheckBox
-                android:id="@+id/italianCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Italian"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="349dp" />
-
-            <CheckBox
-                android:id="@+id/asianCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Asian"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.141"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="349dp" />
-        </LinearLayout>
-    </ScrollView>
+        app:layout_constraintStart_toEndOf="@+id/spinner" />
 
 </android.support.constraint.ConstraintLayout>
