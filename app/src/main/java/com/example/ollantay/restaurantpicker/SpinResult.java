@@ -57,6 +57,7 @@ public class SpinResult extends AppCompatActivity {
 
         final TextView restaurantName = (TextView) findViewById(R.id.restaurantName);
         final TextView rating = (TextView) findViewById(R.id.rating);
+        //final TextView priceLevel = findViewById(R.id.priceLevel2);
 
 
         Double longit = MainActivity.longitude;
@@ -72,10 +73,10 @@ public class SpinResult extends AppCompatActivity {
 
         ArrayList<Restaurant> possibleRestaurants = search(latit, longit, radius);
 
-        Log.d("myTag", String.valueOf(longit));
-        Log.d("myTag", String.valueOf(latit));
-        Log.d("myTag", String.valueOf(possibleRestaurants.size()));
-        Log.d("myTag", String.valueOf(radius));
+        Log.d("myTag long", String.valueOf(longit));
+        Log.d("myTag lat", String.valueOf(latit));
+        Log.d("myTag size ", String.valueOf(possibleRestaurants.size()));
+        Log.d("myTag radius ", String.valueOf(radius));
 //        Log.d("myTag", SettingsMenu.keyword);
 
         Restaurant pickedPlace;
@@ -87,6 +88,7 @@ public class SpinResult extends AppCompatActivity {
         }
         restaurantName.setText(pickedPlace.toString());
         rating.setText(String.valueOf(pickedPlace.getRating()));
+        //priceLevel.setText(pickedPlace.getPriceLeve());
 
         tryAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +129,7 @@ public class SpinResult extends AppCompatActivity {
 //            apiCall.append("&opennow=true");
             apiCall.append("&keyword=" + SettingsMenu.keyword);
             apiCall.append("&key=" + API_KEY);
-
+            //Log.d("myTag keyword ", SettingsMenu.keyword);
             URL urlToCall = new URL(apiCall.toString());
             Log.e("myTag", apiCall.toString());
             connectToAPI = (HttpURLConnection) urlToCall.openConnection();
@@ -156,11 +158,13 @@ public class SpinResult extends AppCompatActivity {
             JSONArray restaurantArray = jsonTemp.getJSONArray("results");
 
             toReturn = new ArrayList<>(restaurantArray.length());
+            //Log.d("myTag size ", String.valueOf(restaurantArray.length()));
             for (int i = 0; i < restaurantArray.length(); i++) {
                 Restaurant current = new Restaurant();
                 current.reference = restaurantArray.getJSONObject(i).getString("reference");
                 current.name = restaurantArray.getJSONObject(i).getString("name");
                 current.rating = restaurantArray.getJSONObject(i).getDouble("rating");
+                //current.priceLevel = restaurantArray.getJSONObject(i).getInt("price_level");
                 toReturn.add(current);
             }
 
@@ -174,11 +178,25 @@ public class SpinResult extends AppCompatActivity {
         private String reference;
         private String name;
         private double rating;
+        ///private int priceLevel;
 
         public Restaurant() {
             super();
         }
-
+        /*
+        public String getPriceLeve() {
+            if (priceLevel == 0) {
+                return "Free";
+            } else if (priceLevel == 1) {
+                return "Inexpensive";
+            } else if (priceLevel == 2) {
+                return "Moderate";
+            } else if (priceLevel == 3) {
+                return "Expensive";
+            } else {
+                return "Very Expensive";
+            }
+        }*/
         public double getRating() {
             return rating;
         }

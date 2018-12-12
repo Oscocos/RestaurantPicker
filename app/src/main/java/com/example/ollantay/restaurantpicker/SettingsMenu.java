@@ -13,7 +13,7 @@ import android.widget.TextView;
 public class SettingsMenu extends AppCompatActivity {
 
     public static int radius;
-    public  static String keyword;
+    public static String keyword = "food";
     private EditText distance;
     private EditText info;
     private Spinner minPrice;
@@ -44,7 +44,7 @@ public class SettingsMenu extends AppCompatActivity {
                 if (!j.equals("")) {
                     keyword = j;
                 } else {
-                    keyword = "";
+                    keyword = "food";
                 }
             }
         });
