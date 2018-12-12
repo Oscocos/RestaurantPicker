@@ -102,12 +102,12 @@ public class MainActivity extends AppCompatActivity implements
                                     if (location != null) {
                                         longitude = location.getLongitude();
                                         latitude = location.getLatitude();
-                                    } else  {
+                                        openSpinResult();
+                                    } else {
                                         requestLocationPermission();
                                     }
                                 }
                             });
-                    openSpinResult();
                 } else {
                     requestLocationPermission();
                 }
@@ -230,70 +230,70 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    public static ArrayList<Place> search(double lat, double lng, int radius) {
-        ArrayList<Place> restaurantList = null;
-        HttpURLConnection conn = null;
-        StringBuilder jsonResults = new StringBuilder();
-        try {
-            StringBuilder sb = new StringBuilder(PLACES_API_BASE);
-            sb.append(TYPE_SEARCH);
-            sb.append(OUT_JSON);
-            sb.append("location=" + String.valueOf(lat) + "," + String.valueOf(lng));
-            sb.append("&radius=" + String.valueOf(radius));
-            sb.append("&type=restaurant");
-            sb.append("&key=" + API_KEY);
-            URL url = new URL(sb.toString());
-            conn = (HttpURLConnection) url.openConnection();
-            InputStreamReader in = new InputStreamReader(conn.getInputStream());
-
-            int read;
-            char[] buff = new char[1024];
-            while ((read = in.read(buff)) != -1) {
-                jsonResults.append(buff, 0, read);
-            }
-        } catch (MalformedURLException e) {
-            Log.e(LOG_TAG, "", e);
-            return restaurantList;
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "", e);
-            return restaurantList;
-        } finally {
-            if (conn != null) {
-                conn.disconnect();
-            }
-        }
-        try {
-            // Create a JSON object hierarchy from the results
-            JSONObject jsonObj = new JSONObject(jsonResults.toString());
-            JSONArray predsJsonArray = jsonObj.getJSONArray("results");
-
-            // Extract the descriptions from the results
-            restaurantList = new ArrayList<>(predsJsonArray.length());
-            for (int i = 0; i < predsJsonArray.length(); i++) {
-                Place place = new Place();
-                place.reference = predsJsonArray.getJSONObject(i).getString("reference");
-                place.name = predsJsonArray.getJSONObject(i).getString("name");
-                restaurantList.add(place);
-            }
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, "Error processing JSON results", e);
-        }
-
-        return restaurantList;
-    }
-
-    public static class Place {
-        private String reference;
-        private String name;
-
-        public Place(){
-            super();
-        }
-        @Override
-        public String toString(){
-            return this.name; //This is what returns the name of each restaurant for array list
-        }
-    }
+//    public static ArrayList<Place> search(double lat, double lng, int radius) {
+//        ArrayList<Place> restaurantList = null;
+//        HttpURLConnection conn = null;
+//        StringBuilder jsonResults = new StringBuilder();
+//        try {
+//            StringBuilder sb = new StringBuilder(PLACES_API_BASE);
+//            sb.append(TYPE_SEARCH);
+//            sb.append(OUT_JSON);
+//            sb.append("location=" + String.valueOf(lat) + "," + String.valueOf(lng));
+//            sb.append("&radius=" + String.valueOf(radius));
+//            sb.append("&type=restaurant");
+//            sb.append("&key=" + API_KEY);
+//            URL url = new URL(sb.toString());
+//            conn = (HttpURLConnection) url.openConnection();
+//            InputStreamReader in = new InputStreamReader(conn.getInputStream());
+//
+//            int read;
+//            char[] buff = new char[1024];
+//            while ((read = in.read(buff)) != -1) {
+//                jsonResults.append(buff, 0, read);
+//            }
+//        } catch (MalformedURLException e) {
+//            Log.e(LOG_TAG, "", e);
+//            return restaurantList;
+//        } catch (IOException e) {
+//            Log.e(LOG_TAG, "", e);
+//            return restaurantList;
+//        } finally {
+//            if (conn != null) {
+//                conn.disconnect();
+//            }
+//        }
+//        try {
+//            // Create a JSON object hierarchy from the results
+//            JSONObject jsonObj = new JSONObject(jsonResults.toString());
+//            JSONArray predsJsonArray = jsonObj.getJSONArray("results");
+//
+//            // Extract the descriptions from the results
+//            restaurantList = new ArrayList<>(predsJsonArray.length());
+//            for (int i = 0; i < predsJsonArray.length(); i++) {
+//                Place place = new Place();
+//                place.reference = predsJsonArray.getJSONObject(i).getString("reference");
+//                place.name = predsJsonArray.getJSONObject(i).getString("name");
+//                restaurantList.add(place);
+//            }
+//        } catch (JSONException e) {
+//            Log.e(LOG_TAG, "Error processing JSON results", e);
+//        }
+//
+//        return restaurantList;
+//    }
+//
+//    public static class Place {
+//        private String reference;
+//        private String name;
+//
+//        public Place(){
+//            super();
+//        }
+//        @Override
+//        public String toString(){
+//            return this.name; //This is what returns the name of each restaurant for array list
+//        }
+//    }
 
     public void openSpinResult() {
         Intent intent  = new Intent(this, SpinResult.class);

@@ -61,12 +61,11 @@ public class SpinResult extends AppCompatActivity {
 
         Double longit = MainActivity.longitude;
         Double latit = MainActivity.latitude;
-        String keyword = SettingsMenu.keyword;
 
         // radius to search in meters
         int radius;
         if (SettingsMenu.radius == 0) {
-            radius = 5000;
+            radius = 15000;
         } else {
             radius = SettingsMenu.radius;
         }
@@ -76,9 +75,11 @@ public class SpinResult extends AppCompatActivity {
         Log.d("myTag", String.valueOf(longit));
         Log.d("myTag", String.valueOf(latit));
         Log.d("myTag", String.valueOf(possibleRestaurants.size()));
+        Log.d("myTag", String.valueOf(radius));
+//        Log.d("myTag", SettingsMenu.keyword);
 
         Restaurant pickedPlace;
-        if (possibleRestaurants == null) {
+        if (possibleRestaurants == null || possibleRestaurants.size() <= 0) {
             restaurantName.setText(getResources().getString(R.string.empty_message));
             pickedPlace = new Restaurant();
         } else {
@@ -123,10 +124,12 @@ public class SpinResult extends AppCompatActivity {
             apiCall.append("location=" + String.valueOf(latit) + "," + String.valueOf(longit));
             apiCall.append("&radius=" + String.valueOf(radius));
             apiCall.append("&type=restaurant");
-//            apiCall.append("@keyword=")
+//            apiCall.append("&opennow=true");
+//            apiCall.append("&keyword=" + SettingsMenu.keyword);
             apiCall.append("&key=" + API_KEY);
 
             URL urlToCall = new URL(apiCall.toString());
+            Log.e("myTag", apiCall.toString());
             connectToAPI = (HttpURLConnection) urlToCall.openConnection();
             InputStreamReader input = new InputStreamReader(connectToAPI.getInputStream());
 
@@ -182,7 +185,7 @@ public class SpinResult extends AppCompatActivity {
         @Override
         public String toString() {
             if (name == null) {
-                return "Empty.";
+                return "No restaurants nearby.";
             } else {
                 return this.name;
             }

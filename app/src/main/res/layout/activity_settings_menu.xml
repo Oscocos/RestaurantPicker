@@ -31,7 +31,7 @@
         android:layout_height="47dp"
         android:autoText="false"
         android:ems="10"
-        android:hint="Maximum distance (Meters)"
+        android:hint="Maximum distance (Miles)"
         android:inputType="number"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -80,5 +80,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/spinner" />
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginLeft="148dp"
+        android:layout_marginEnd="148dp"
+        android:layout_marginRight="148dp"
+        android:text="SAVE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

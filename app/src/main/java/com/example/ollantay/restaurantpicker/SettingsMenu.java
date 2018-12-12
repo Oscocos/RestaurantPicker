@@ -2,6 +2,8 @@ package com.example.ollantay.restaurantpicker;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
@@ -16,6 +18,8 @@ public class SettingsMenu extends AppCompatActivity {
     private Spinner minPrice;
     private Spinner maxPrice;
 
+    private Button save;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,13 +29,20 @@ public class SettingsMenu extends AppCompatActivity {
         info = findViewById(R.id.info);
         minPrice = findViewById(R.id.spinner);
         maxPrice = findViewById(R.id.spinner2);
-        String i = (distance.getText().toString());
-        if (!i.equals("")) {
-            radius = Integer.parseInt(i);
-        }
-        String j = info.getText().toString();
-        if (!j.equals("")) {
-            keyword = j;
-        }
+
+        save = findViewById(R.id.save);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String i = (distance.getText().toString());
+                if (!i.equals("")) {
+                    radius = Integer.parseInt(i) * 1609;
+                }
+                String j = info.getText().toString();
+                if (!j.equals("")) {
+                    keyword = j;
+                }
+            }
+        });
     }
 }
