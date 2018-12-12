@@ -125,7 +125,7 @@ public class SpinResult extends AppCompatActivity {
             apiCall.append("&radius=" + String.valueOf(radius));
             apiCall.append("&type=restaurant");
 //            apiCall.append("&opennow=true");
-//            apiCall.append("&keyword=" + SettingsMenu.keyword);
+            apiCall.append("&keyword=" + SettingsMenu.keyword);
             apiCall.append("&key=" + API_KEY);
 
             URL urlToCall = new URL(apiCall.toString());

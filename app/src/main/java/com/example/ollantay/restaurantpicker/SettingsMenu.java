@@ -2,6 +2,7 @@ package com.example.ollantay.restaurantpicker;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,8 +40,11 @@ public class SettingsMenu extends AppCompatActivity {
                     radius = Integer.parseInt(i) * 1609;
                 }
                 String j = info.getText().toString();
+                Log.e("myTag", j);
                 if (!j.equals("")) {
                     keyword = j;
+                } else {
+                    keyword = "";
                 }
             }
         });
